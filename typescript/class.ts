@@ -33,12 +33,12 @@ interface AA {
 // class는 interface를 implements 가능 (인터페이스가 있으면 클래스는 인터페이스를 따라야한다.)
 
 // protected vs private
-class BB implements AA {
-  private a: string;
-  protected b: string;
-}
+// class BB implements AA {
+//   private a: string;
+//   protected b: string;
+// }
 
 // private는 상속한 애들까진 접근할 수 있다.
-class CC extends BB {}
+// class CC extends BB {}
 // new CC().a;
 // new CC().b;
