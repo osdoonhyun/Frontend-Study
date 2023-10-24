@@ -1,3 +1,12 @@
+// prototype
+let user = { name: 'kim', age: 40 };
+let admin = {};
+admin.__proto__ = user;
+console.log(admin.age); // 50
+console.log(admin.name); // kim
+
+// Built-in-Javascript API or Javascript Native API : 자바스크립트 객체, 배열등에 내재된 메서드 또는 속성들
+
 class A {
   a: string;
   b: number;
