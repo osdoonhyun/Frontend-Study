@@ -41,3 +41,13 @@ function consoleLogText<T>(text: T): T {
 }
 
 consoleLogText<string>('kkk');
+
+function addT<T extends number>(x: T, y: T): T {
+  return (x + y) as T;
+}
+
+addT(1, 2);
+// const addF = <T = unknown>(x: T, y: T) => {
+const addF = <T extends unknown>(x: T, y: T) => {
+  return { x, y };
+};

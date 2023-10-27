@@ -1,3 +1,5 @@
+// typeof, instanceof, in, Array.isArray, Custom 타입 판별
+
 function numOrStr(a: number | string) {
   // a.toFixed(1) // Error : a가 string일 가능성 있음
   if (typeof a === 'number') {
@@ -23,8 +25,36 @@ function numOrArr(a: number | number[]) {
 numOrArr(123);
 numOrArr([1, 2, 3]);
 
+// 1. 객체간의 타입 검사 : 같은 속성인데 값이 다른 경우 (대게 이걸 사용)
+type B = { type: 'b'; bbb: string };
+type C = { type: 'c'; ccc: string };
+type D = { type: 'd'; ddd: string };
+
+function typeCheck(a: B | C | D) {
+  if (a.type === 'b') {
+    a.bbb;
+  } else if (a.type === 'c') {
+    a.ccc;
+  } else {
+    a.ddd;
+  }
+}
+
+// 2. 객체간의 타입 검사 : 속성 이름 자체가 다른 경우
+// -> in 연산자를 통해 속성 값으로 구별하기
+function typeCheck2(a: B | C | D) {
+  if ('bbb' in a) {
+    a.bbb;
+  } else if ('ccc' in a) {
+    a.ccc;
+  } else {
+    a.ddd;
+  }
+}
+
 // Custom TypeGuard
 // if문 안에 써서 TypeScript한테 정확한 타입이 뭔지 알려줌
+// return에 is가 들어가 있어 if문 안에 써서 typescript한테 정확한 타입을 알려줌
 interface Cat {
   meow: number;
 }
