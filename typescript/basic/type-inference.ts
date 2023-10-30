@@ -29,3 +29,13 @@ let detailedItem: DetailDropdowning<number> = {
   description: 'bbb',
   tag: 5,
 };
+
+// 타입 넓히기 - 타입추론
+let num = 5; // let num: number
+// 타입 추론 시 typescript가 상황을 고려하여 타입을 넓혀줌
+
+// 타입 좁히기 - 타입가드
+let str: string | number;
+if (typeof str === 'string') {
+  str.toString();
+} // str의 타입을 좁혀줌
