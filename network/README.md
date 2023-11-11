@@ -198,3 +198,35 @@
    Transform, opacity와 같은 요소들을 의미한다.
 
    ### 13. 화면이 웹 브라우저에 출력된다.
+
+## ❓RESTful API에 대해서 설명해 주세요
+
+REST API는 인터넷 식별자 URI(Uniform Resource Identifier)와 HTTP를 기반으로 하고 브라우저 간 호환성이 좋은 JSON 형식을 주로 사용한다.
+
+REST의 가장 큰 중요한 특성은 각 요청이 어떤 정보나 동작을 위한 것인지 그 모습 자체로 추론이 가능하다.
+
+REST는 문서, 그림, 데이터 등의 자원을 이름으로 구분해서 해당 자원에 대한 상태, 정보를 주고 받는 것을 의미한다. 또한 HTTP Method를 활용해서 해당 리소스에 대한 crud를 적용하는 것을 의미한다. REST API에서는 다양한 HTTP Method 중에서도 GET, POST, PUT, PATCH, DELETE가 있다.
+
+REST API는 HTTP 요청을 할 때 어떤 URI에 어떤 Method를 사용할지에 대한 약속이다.
+
+---
+
+API 이기 때문에, 서버와 클라이언트가 통신을 하는 약속 중 REST 한 형태를 띄는 것.
+
+REST API 메세지를 읽는 것만으로도 메세지가 의도하는 바를 명확하게 파악할 수 있다.
+
+REST API는 기본적으로 HTTP 프로토콜을 사용해서 서버 클라이언트나 요청하고 응답 처리를 하는데, 이 말인 즉, HTTP 인프라를 그대로 사용하기 때문에, REST API 사용을 위한 별도의 인프라 구축이 필요없다.
+
+그렇기에 HTTP의 특징인 클라이언트와 서버가 독립적으로 운영이 가능하다.
+
+REpresentation : 표현
+
+State : 상태
+
+Transfer : 전달
+
+자원의 표현을 가지고 상태를 전달한다.
+
+URI 설계시 리소스를 URI에 명시하고 상태를 HTTP 메서드로 해준다.
+
+모든 동작은 Method로 나타낸다(GET, POST, PUT, PATCH, DELETE)
