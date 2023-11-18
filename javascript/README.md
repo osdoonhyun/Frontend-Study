@@ -54,3 +54,23 @@ C언어와 같은 Low-level 언어에서는 free() 함수를 통해 메모리 �
 실행컨텍스트는 식별자 결정에 있어서 효율적으로 해주는 수단으로서 필요한 정보를 한데 모아 제공하는 객체
 
 실행 컨텍스트를 “코드 실행에 필요한 환경을 제공하는 객체”로 정리했고 보다 효율적인 식별자 결정을 위해 필요하다
+
+## ❓ 자바스크립트 객체의 속성에 대해 설명해 주세요.(writable, enumerable, configurable)
+
+`Object.getOwnPropertyDescriptor(obj, prop);` 를 통해 객체 속성에 대한 정보를 확인할 수 있는데, 이때 객체와 객체의 속성을 인자로 넣어주면, value를 제외한 총 3개의 속성 설명을 확인할 수 있다. 3개 모두 true를 기본값으로 갖는다. `Object.defineProperty()` 를 통해 속성 설명자를 변경할수 있다.
+
+1. writable 속성 : 해당 값을 수정할 수 있는지 여부를 나타내고 false로 설정하면
+2. enumberable : 해당 객체의 속성 열거가 가능한 경우 true이고 이는 for… in Object.key() 메서드 등을 사용하여 객체 속성을 열가할 때 사용된다.
+3. configurable : 해당 속성은 설정을 변경할 수 있는지 여부를 나타낸다. configurable을 false로 설정하면 설정을 변경할 수 없다.
+
+위 3개의 객체 속성 writable, configurable, enumerable을 통해 객체의 동작을 제어할 수 있다.
+
+freeze : 값을 변경하고 추가 제거하는 것을 방지하고 싶을 때 사용
+
+**`Object.freeze()`**를 사용하면 속성의 **`writable`**, **`enumerable`**, **`configurable`** 속성이 모두 **`false`**로 설정됩니다.
+
+seal : 변경은 상관없고 값을 추가, 제거만 방지일 때 사용
+
+**`Object.seal()`**을 사용하면 속성의 **`writable`**은 **`true`**로 설정되지만, **`enumerable`**와 **`configurable`**는 **`false`**로 설정됩니다.
+
+구체적으로 object의 원리에 대해서는 공부해보지 않았지만 유추해보자면, 객체 속성을 설정 값을 변경해줌으로써 객체를 잠글 수 있지 않을까 생각됩니다.
