@@ -237,3 +237,80 @@ REST: 웹에서 사용하는 아키텍쳐
 서버와 클라이언트 간 통신 방식 중 하나로,
 자원을 이름으로 구분하여,
 자원의 상태를 주고 받는 통신 방식이다. -> Http 메서드 Http 상태
+
+## ❓CORS각 무엇인지 설명해 주세요.
+
+CORS : Cross-Origin Resource Sharing 교차 출처(다른 출처) 리소스 공유 정책
+
+**출처(Origin)**
+
+우리가 어떤 사이트를 접속할때 인터넷 주소창에 우리는 URL이라는 문자열을 통해 접근하게 된다.이처럼 URL은 https://domain.com:3000/user?query=name&page=1 과 같이 하나의 문자열 같지만, 사실은 다음과 같이 여러개의구성 요소로 이루어져 있다.Protocol(Scheme) : http, httpsHost : 사이트 도메인Port : 포트 번호Path : 사이트 내부 경로Query string : 요청의 key와 value값Fragment : 해시 태크몇몇 독자분들 중에 이미 각 URL의 속성들에 대해 다 알고있는 수준이 높은 분들도 있고, 아직은 상세히 잘 모르는 분들도 계실거라 추측한다.CORS를 이해하는데 있어 저것들을 모두 알아야 되는 것은 아니고, 딱 3가지만 기억하면 된다.Origin : Protocol + Host + Port즉,출처(Origin) 라는 것은 Protolcol 과 Host 그리고 Port 까지 모두 합친 URL을 의미한다고 보면 된다. 간단하게 자바스크립트로도 현재 사이트의 Origin을 알아낼 수도 있다
+
+- Protocol(Scheme) : http, https
+- Host : 사이트 도메인
+- Port : 포트 번호
+- Path : 사이트 내부 경로
+- Query string : 요청의 key와 value값
+- Fragment : 해시 태크
+
+`Origin : Protocol + Host + Port`
+
+→ 출처(Origin)은 Protocol과 Host와 Port까지 모두 합친 URL 기본포트 번호는 생략됨.
+
+### 동일 출처 정책(SOP : Same-Origin Policy)
+
+SOP(Same-Origin Policy) 는 동일한 출처에 대한 정책을 말한다. SOP 정책은 `‘동일한 출처에서만 리소스를 공유할 수 있다.’`
+
+즉, 동일 출처 서버에 있는 리소스는 자유롭게 가져올 수 있지만, 다른 출처 서버에 있는 리소스는 상호작용이 불가능하다.
+
+**그렇다면 SOP 정책은 왜 필요할까?**
+
+해커가 사용자 브라우저를 프록시처럼 악용할 수 있다. 이러한 악의적인 경우를 방지하기 위해, SOP 정책을 통해 동일하지 않는 다른 출처의 스크립트가 실행되지 않도록 브라우저에서 사전에 방지하는 것이다.
+
+**그렇다면 다른 출처의 리소스가 필요하다면 어떻게 해야 할까?**
+
+### CORS
+
+교차 출처 리소스 공유는 추가 HTTP 헤더를 사용하여, 한 **출처**에서 실행 중인 웹 애플리케이션이 다른 출처의 선택한 자원에 접근할 수 있는 권한을 부여하도록 **브라우저**에 알려주는 체제다.
+
+**CORS 접근제어 시나리오**
+
+1. **단순 요청(Simple Request)**
+
+preflight와는 다르게 바로 본 요청(Actual Request)를 보내면서 그 즉시 이것이 Cross-Origin인지 확인하는 절차이다.
+
+Simple Request를 보내기 위해서는 아래의 조건을 모두 만족해야 한다.
+
+<aside>
+💡 **왜 Preflight가 필요할까?**
+simple request로 하면 한 번 요청하고 끝인데, 왜 굳이 두 번 요청해야할까?
+**CORS를 모르는 서버를 위함이다.**
+
+origin은 [bom.com](http://bom.com) 라고 브라우저에게 보내고 브라우저는 그대로 서버로 보낸다. 서버는 CORS에 관련해서 모르기 때문에 Allow-Origin 은 없이 해결하고 응답을 보낸다. 그러고 나서 브라우저는 CORS 에러가 뜬다.
+서버는 일단 모든 것을 해결하고 응답을 보냈는데, 브라우저에서 CORS 에러를 낸다.
+
+위와 같이 하면 클라이언트는 브라우저로 보내고 브라우저는 서버로 보내는데, 서버 입장에서는 CORS 설정이 없으니, Allow-Origin이 없다. 그러면 브라우저는 에러를 내뱉는다. 사전 요청이기에 서버는 어떠한 행동도 하지 않고 실제 요청도 보내지지 않음.
+
+</aside>
+
+1. **프리플라이트 요청(Preflight Request)**
+
+preflight : 본 요청을 보내기 전에 서버한테 요청이 가능한지 OPTIONS 메서드를 통해 물어보는 작업
+
+1. OPTIONS 메서드를 통해 다른 도메인의 리소스에 요청이 가능한 지 확인 작업
+
+2. 요청이 가능하다면 실제 요청(Actual Request)를 보낸다.
+
+**Preflight Request 흐름**
+
+만약 preflight request가 거부가 되면, actual request는 보내지 않는다.
+
+preflight시 물어볼 것과 거기에 맞는 preflight request의 Format이 있다.
+
+**Access-Control-Max-Age : Preflight 응답 캐시 기간이란?**
+
+preflight는 사전요청(Request)과 실제요청(Actual Request) 한 번의 요청을 보낼때마다 총 2개의 요청이 보내진다. 이것은 리소스적으로 좋지 않기 때문에 브라우저는 preflight 응답에 대해서 브라우저는 캐싱을 해두고 다음 똑같은 요청을 보낼 때, preflight 캐싱된 것을 확인하고 preflight의 사전 요청을 미리 보내지 않고 바로 본 요청을 보낸다.
+
+1. **인증정보 포함 요청(Credentialed Request)**
+
+쿠키나 JWT 토큰을 클라이언트에서 자동으로 담아서 보내고 싶을 때, credentials를 include하여 서버 측까지 전달해준다.(서버측도 설정해야함)
