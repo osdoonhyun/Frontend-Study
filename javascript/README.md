@@ -462,3 +462,27 @@ new를 넣은채로 호출을 하면 생성자 함수로써 호출을 한 것이
 **생성자 함수 호출시**
 
 - 생성자 함수 호출시에는 인스턴스가 곧 this이다.
+
+## ❓깊은 복사 얕은 복사에 대해 설명해 주세요.
+
+객체나 배열을 복사하는 방법을 얘기합니다. 얕은 복사는 참조 값의 복사를 나타낸다. 원본 객체의 주소값을 복사하는 것을 의미합니다.
+
+깊은 복사는 참조 주소 값이 아닌 값을 복사하는 것을 의미합니다. 이는 원본과 참조가 끊어지기 때문에 복사된 값을 변경해도 원본 객체에 영향을 주지 않습니다.
+
+객체 복사 연산자로는
+
+- Object.assgin(생성할 객체, 복사할 객체)
+- 전개연산자
+- lodash deepclone이 있다.
+
+```jsx
+const originalObject = { a: 1, b: { c: 2 } };
+const deepCopy = JSON.parse(JSON.stringify(originalObject));
+```
+
+**`JSON.parse(JSON.stringify(originalObject));`**는 JavaScript 객체나 배열을 깊은 복사하는 일반적인 방법 중 하나입니다. 이 방법은 객체를 JSON 문자열로 변환하고, 다시 JSON 문자열을 파싱하여 새로운 객체를 생성하는 과정을 통해 깊은 복사를 수행합니다.
+
+1. **`JSON.stringify(originalObject)`**: 원본 객체(**`originalObject`**)를 JSON 문자열로 변환합니다. 이 과정에서 객체의 구조가 문자열로 표현되며, 함수, undefined, 순환 참조 등은 무시됩니다.
+2. **`JSON.parse(...)`**: 앞서 생성된 JSON 문자열을 파싱하여 새로운 객체를 생성합니다. 이때, 새로운 객체는 원본 객체의 모든 속성과 값들을 복사한 것이 됩니다.
+
+`immutable.json` 도 있다.
