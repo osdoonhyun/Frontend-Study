@@ -486,3 +486,40 @@ const deepCopy = JSON.parse(JSON.stringify(originalObject));
 2. **`JSON.parse(...)`**: 앞서 생성된 JSON 문자열을 파싱하여 새로운 객체를 생성합니다. 이때, 새로운 객체는 원본 객체의 모든 속성과 값들을 복사한 것이 됩니다.
 
 `immutable.json` 도 있다.
+
+## ❓ **`||` 와 `??` 차이에 대해 설명해 주세요.**
+
+`||`는 0, "", false, undefined 같은 falsy 값을 전부 검사 하는 연산자고 `??`는 undefined 하고 null 같은 nullish 만 검사하는 연산자입니다.
+
+```jsx
+const a = false || "어떻게";
+// a => "어떻게"
+const b = false ?? "사람 이름이";
+// b => false
+const c = undefined ?? null ?? "엄",
+// c => "엄"
+```
+
+**Q . 자바스크립트에서 `||`은 or연산도 되는데 그러면 오류가 뜰 가능성은 없나요?**
+
+**A .**
+
+falsy한 값이 유효하며 nullish한 값만 무효해야하는 상황이라면 쓸 수 있습니다.
+0,false,true,1,2,3,"abc",... 등이 참이고 null, undefined는 거짓인 경우로 예를 들 수 있겠네요.
+
+```jsx
+const x = 0;
+const y = false;
+const z = {};
+const a = x ?? 'hello'; // 0
+const b = z.key ?? 'hello'; // hello
+const c = y ?? 'hello'; // false
+const aa = x || 'hello'; // hello
+const bb = z.key || 'hello'; // hello
+const cc = y || 'hello'; // hello
+```
+
+이런식으로 직접 해보시면 알 수 있습니다.
+조건문으로 쓸 때에는
+A || B 일 때에는 A가 falsy하다면 B까지 검사하지만
+A ?? B 라면 A가 falsy해도 nullish하지 않다면 참이므로 B까지 검사하지 않고 조건이 참이된다
