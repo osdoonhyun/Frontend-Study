@@ -51,3 +51,16 @@ useEffect(() => {}, []) // ComponetDidMount
 useEffect(() => {}, [a, b]) // ComponentDidUpdate
 useEffect(() => {return () => {}}) // ComponentWillUnmount 컴포넌트가 언마운트 되기 직전에 실행됨
 ```
+
+## ❓ setState는 비동기인가요?
+
+setState의 역할은 컴포넌트의 state 객체를 업데이트하는 것이다. 리액트에서는 state가 변경되면 컴포넌트가 리렌더링된다.
+
+setState 함수는 동기 함수이지만 setState 함수 호출은 비동기적으로 일어난다.
+리액트의 setState가 동기 함수인데 마치 비동기 함수처럼 보이는 이유는 리액트의 리렌더링 원리가 가상 돔을 통해 비동기적으로 작동하기 때문이다.
+
+## ❓ setState(num + 1) vs setState(num ⇒ num + 1)?
+
+setState(num + 1): 이 방법은 현재 상태 값을 가져와서 그에 1을 더한 값을 설정합니다. 이는 상태가 비동기적으로 업데이트되는 경우 문제를 일으킬 수 있습니다. 여러 번 호출되면 예상치 못한 동작이 발생할 수 있습니다.
+
+setState(num => num + 1): 이 방법은 이전 상태 값을 받아와서 함수를 통해 새로운 상태 값을 계산합니다. 이전 상태를 정확히 알 수 있기 때문에 비동기적 업데이트에서 발생하는 문제를 방지할 수 있습니다.
