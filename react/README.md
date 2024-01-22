@@ -64,3 +64,22 @@ setState 함수는 동기 함수이지만 setState 함수 호출은 비동기적
 setState(num + 1): 이 방법은 현재 상태 값을 가져와서 그에 1을 더한 값을 설정합니다. 이는 상태가 비동기적으로 업데이트되는 경우 문제를 일으킬 수 있습니다. 여러 번 호출되면 예상치 못한 동작이 발생할 수 있습니다.
 
 setState(num => num + 1): 이 방법은 이전 상태 값을 받아와서 함수를 통해 새로운 상태 값을 계산합니다. 이전 상태를 정확히 알 수 있기 때문에 비동기적 업데이트에서 발생하는 문제를 방지할 수 있습니다.
+
+## ❓Hydration이 무엇인가요?
+
+Hydration은 서버에서 렌더링 된 HTML에 이벤트 리스너 또는 상태를 부여해서 유저와 상호작용 할 수 있도록 만드는 과정입니다.
+
+## ❓웹페이지의 성능 지표 중 Hydration과 연관될 수 있는 것은 무엇이 있을까요?
+
+Hydration을 한다는 것은 SSR을 한다는 뜻이므로 SSR과 연관된 성능 지표들을 꼽을 수 있습니다.
+
+- TTV(Time To View): 빠름
+- FCP(First Contentful Paint): 빠름
+- LCP(Largest Content Paint): 빠름
+- TTI(Time To Interact): 느림
+- FID(First Input Delay): 느림
+
+## ❓Hydration을 최적화할 수 있는 방안은 무엇이 있을까요?
+
+- Progressive Hydration
+- Selective Hydration
