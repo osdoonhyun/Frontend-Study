@@ -388,6 +388,42 @@ obj.b가 메서르소써 호출이 되었다. 여기서의 this는 obj를 가리
 
 > **call, apply, bind 메서드에 대하여 - 명시적인 this 바인딩**
 
+### apply, call, bind에 의한 호출
+
+#### `apply`
+
+- 함수를 호출하는 함수.
+- `함수.apply(thisArg, [arg1, ..., argN])`
+- `this`에 바인딩 할 객체와 함수에 전달할 인자를 `배열(유사배열)`에 넣어서 실행한다.
+
+#### `call`
+
+- 함수를 호출하는 함수.
+- `함수.call(thisArg, arg1, ..., argN)`
+- `this`에 바인딩 할 객체와 함수에 전달할 인자를 넣어서 실행한다.
+
+#### `bind`
+
+- `apply`나 `call`과 다르게 함수를 실행시키지 않고 `this`가 바인딩 된 함수를 반환한다.
+- `함수.bind(thisArg, arg1, ..., argN)`
+- `this`에 바인딩 할 객체와 함수에 전달할 인자를 전달한다.
+- [`bind`는 함수처럼 호출 가능한 `특수 객체(exotic object)`를 반환한다.](https://ko.javascript.info/bind#ref-605)
+- 이 특수 객체를 호출하면 `this`가 `bind`에 넘겨준 객체로 고정된 함수가 호출된다.
+
+```js
+function countNumbers(a, b) {
+  console.log(`${this.name}: ${a}, ${b}`);
+}
+
+const person = { name: 'John' };
+countNumbers.apply(person, [1, 2]); // "John: 1, 2"
+countNumbers.call(person, 1, 2); // "John: 1, 2"
+countNumbers.bind(person)(1, 2); // "John: 1, 2"
+
+const anotherPerson = { name: 'Smith' };
+countNumbers.bind(person).call(anotherPerson, 1, 2); // "John: 1, 2" => bind로 인해 this가 person으로 고정됨
+```
+
 [`a.call](http://a.call)(b, 1, 2, 3)`에서 this가 b를 가리키고 있고 x, y, z가 차례로 1, 2, 3이다. a.call 호출한 결과에 첫 번째 인자가 this로 넘어가고 두 번째부터는 차례대로 함수의 매개변수로 넘어간다
 
 `a.apply(b, [1, 2, 3])`에서 첫 번째 인자가 this가 되고 두 번째 인자는 배열의 각각의 요소들이 함수의 매개변수가 된다.
