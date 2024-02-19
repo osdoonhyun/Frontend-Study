@@ -499,6 +499,63 @@ new를 넣은채로 호출을 하면 생성자 함수로써 호출을 한 것이
 
 - 생성자 함수 호출시에는 인스턴스가 곧 this이다.
 
+## ❓어떤 함수의 내부에서 호출된 함수의 this가 전역객체를 참조하는 것을 회피하려면 어떻게 해야 하나요?
+
+- `this`를 변수에 할당해두고 내부 함수에서 참조하는 방법
+
+```js
+const obj = {
+  method: function () {
+    const memoizedThis = this; // this를 변수에 할당
+    console.log(this); // obj
+
+    function innerFunc() {
+      console.log(this); // window
+      console.log(memoizedThis); // obj
+    }
+    innerFunc();
+  },
+};
+
+obj.method();
+```
+
+- 화살표 함수를 사용하는 방법
+
+```js
+const obj = {
+  method: function () {
+    console.log(this); // obj
+
+    const innerFunc = () => {
+      console.log(this); // obj
+    };
+    innerFunc();
+  },
+};
+
+obj.method();
+```
+
+- `apply`, `call`, `bind`를 사용해서 명시적으로 바인딩하는 방법
+
+```js
+const obj = {
+  method: function () {
+    console.log(this); // obj
+
+    function innerFunc(arg1, arg2) {
+      console.log(this); // obj
+    }
+    innerFunc.apply(obj, [1, 2]);
+    innerFunc.call(obj, 1, 2);
+    innerFunc.bind(obj)(1, 2);
+  },
+};
+
+obj.method();
+```
+
 ## ❓깊은 복사 얕은 복사에 대해 설명해 주세요.
 
 객체나 배열을 복사하는 방법을 얘기합니다. 얕은 복사는 참조 값의 복사를 나타낸다. 원본 객체의 주소값을 복사하는 것을 의미합니다.
